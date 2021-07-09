@@ -1,0 +1,262 @@
+# paths:
+#   /Cliente:   
+#     get:    
+#       tags:  
+#         - Gestor de Contenidos 
+#       summary: Obtener lista de Clientes
+#       produces:
+#       - application/json
+#       operationId: getClientes       
+#       responses: 
+#         200:
+#           description: Lista de Clientes
+#           content: 
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/listaClientes"
+
+#   /Cliente/rut/email:     
+#     post: 
+#       tags:  
+#         - Gestor de Contenidos 
+#       summary: Obtener un cliente segun su Rut o Email
+#       produces:
+#       - application/json
+#       operationId: findClienteRutEmail
+#       requestBody: 
+#         description: Objeto Cliente
+#         required: true  
+#         content:
+#           application/json:
+#             schema: 
+#               $ref: '#/components/schemas/EmailAndRut'         
+#       responses: 
+#         200:
+#           description: Objeto con detalles del Cliente
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/ClienteAndId"
+
+#   /Cliente/id/{idCliente}:   
+#     get: 
+#       tags:  
+#         - Gestor de Contenidos  
+#       summary: Obtener un cliente segun su id
+#       produces:
+#       - application/json
+#       operationId: findClienteId
+#       parameters:
+#         - name: idCliente
+#           in: path
+#           description: El id del Cliente
+#           required: true
+#           type: Number          
+#       responses: 
+#         200:
+#           description: Objeto con detalles del Cliente
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/ClienteAndId"
+
+#   /Cliente/iniciarSesion: 
+#     post:   
+#       tags: 
+#         - Gestor de Contenidos  
+#       summary: Verificar el inicio de sesión de un Cliente
+#       produces:
+#       - application/json
+#       operationId: iniciarSesionCliente
+#       requestBody: 
+#         description: Objeto Cliente
+#         required: true  
+#         content:
+#           application/json:
+#             schema: 
+#               $ref: '#/components/schemas/EmailAndPassword'  
+#       responses:
+#         200:
+#           description: Objeto con detalles del Cliente
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/ClienteAndId' 
+
+#   /Cliente/cambiarPassword: 
+#     put:   
+#       tags: 
+#         - Gestor de Contenidos  
+#       summary: cambiar el password de un Cliente
+#       produces:
+#       - application/json
+#       operationId: setPasswordCliente
+#       requestBody: 
+#         description: Objeto Cliente
+#         required: true  
+#         content:
+#           application/json:
+#             schema: 
+#               $ref: '#/components/schemas/EmailAndPassword'  
+#       responses:
+#         200:
+#           description: Respuesta
+
+#   /crearCliente: 
+#     post:   
+#       tags: 
+#         - Gestor de Contenidos  
+#       summary: Creación de un Cliente
+#       produces:
+#       - application/json
+#       operationId: setCliente
+#       requestBody: 
+#         description: Objeto Cliente
+#         required: true  
+#         content:
+#           application/json:
+#             schema: 
+#               $ref: '#/components/schemas/Cliente'  
+#       responses:
+#         201:
+#           description: Objeto con detalles del Cliente
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/ClienteAndId' 
+
+#   /actualizarCliente:   
+#     put:   
+#       tags: 
+#         - Gestor de Contenidos  
+#       summary: Actualización de un Cliente
+#       produces:
+#       - application/json
+#       operationId: updateCliente
+#       requestBody: 
+#         description: Objeto Cliente
+#         required: true  
+#         content:
+#           application/json:
+#             schema: 
+#               $ref: '#/components/schemas/ClienteAndId'  
+#       responses:
+#         200:
+#           description: Objeto con detalles del Cliente
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/ClienteAndId' 
+
+#   /eliminarCliente/{idCliente}:  
+#     delete:      
+#       tags:
+#         - Gestor de Contenidos  
+#       summary: Elimina un Cliente por su id
+#       produces:
+#       - application/json
+#       operationId: deleteCliente
+#       parameters:
+#         - name: idCliente
+#           in: path
+#           description: El idCliente de Cliente 
+#           required: true
+#           type: "string"          
+#       responses: 
+#         200:
+#           description: Respuesta
+ 
+# components:
+#   schemas:
+#     Cliente:
+#       type: object
+#       properties:
+#         Nombre:
+#           type: string
+#           example: 'Test'
+#         Apellidos:
+#           type: string
+#           example: 'Test'
+#         Rut:
+#           type: string
+#           example: '11.111.111-3'
+#         Email:
+#           type: string
+#           example: 'test@lionhead.group'
+#         Password:
+#           type: string
+#           example: '1234'
+#         Telefono:
+#           type: string
+#           example: '42685907'
+#         Direccion:
+#           type: string
+#           example: ''
+#         Region:
+#           type: Number
+#           example: 1
+#         Estado:
+#           type: char
+#           example: 'A'
+  
+#     ClienteAndId:
+#       type: object
+#       properties:
+#         idCliente:
+#           type: Number
+#           example: 8888
+#         Nombre:
+#           type: string
+#           example: 'Test'
+#         Apellidos:
+#           type: string
+#           example: 'Test'
+#         Rut:
+#           type: string
+#           example: '11.111.111-3'
+#         Email:
+#           type: string
+#           example: 'test@lionhead.group'
+#         Telefono:
+#           type: string
+#           example: '42685907'
+#         Direccion:
+#           type: string
+#           example: ''
+#         Region:
+#           type: Number
+#           example: 1
+#         Estado:
+#           type: char
+#           example: 'A'
+    
+#     EmailAndPassword:
+#       type: object
+#       properties:
+#         Email:
+#           type: string
+#           example: 'test@lionhead.group'
+#         Password:
+#           type: string
+#           example: '1234'
+
+#     EmailAndRut:
+#       type: object
+#       properties:
+#         Email:
+#           type: string
+#           example: 'test@lionhead.group'
+#         Rut:
+#           type: string
+#           example: '11.111.111-1'
+
+#     listaClientes:
+#       type: object
+#       properties:
+#           ok:
+#             type: boolean
+#             example: true
+#           data:
+#             type: array
+#             items:
+#                 $ref: "#/components/schemas/ClienteAndId"

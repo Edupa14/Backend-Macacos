@@ -1,0 +1,153 @@
+paths:
+  /banco/edit:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Editado de datos de banco
+      produces:
+      - application/json
+      operationId: setBanco
+      requestBody: 
+        description: Datos de banco para su editado
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosBanco'         
+      responses: 
+        200:
+          description: Objeto con detalles de un banco
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosBanco'
+  /banco/crear:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Registro de datos de banco
+      produces:
+      - application/json
+      operationId: bancos
+      requestBody: 
+        description: Datos de banco para su registro
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Bancos'         
+      responses: 
+        200:
+          description: Objeto con detalles de un banco
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Bancos'
+  /banco/listar:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Lista de bancos de un respectivo sponsor
+      produces:
+      - application/json
+      operationId: setSponsorsBan
+      requestBody: 
+        description: Datos de banco para su filtrado
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosSponsor' 
+      responses: 
+        200:
+          description: Objeto con detalles del banco
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatosSponsor"       
+  /banco/eliminar/{idCtaBan}:
+    delete:
+      tags:  
+        - Administrativo 
+      summary: Inhabilitar estado de un banco
+      produces:
+      - application/json
+      operationId: actualizarEstadoBanco
+      parameters:
+        - name: idCtaBan
+          in: path
+          description: El id del Banco
+          required: true
+          type: Number    
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario para inhabilitar
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosBanco'       
+
+components:
+  schemas:
+    DatosBanco:
+      type: object
+      properties:
+        idCtaBan:
+          type: number
+          example: 1
+        tipCtaBan:
+          type: string
+          example: 'ME'
+        codBanco:
+          type: string
+          example: 'IBK'
+        codMoneda:
+          type: string
+          example: 'EUR'
+        cci:
+          type: string
+          example: '00320001307947336130'
+        ctaBanc:
+          type: string
+          example: '2003079473367'
+    Bancos:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 4
+        ccb:
+          type: string
+          example: '0'
+        tipCtaBan:
+          type: string
+          example: 'CCO'
+        codBanco:
+          type: string
+          example: 'SCO'
+        cci:
+          type: string
+          example: '00079473361303200013'
+        ctaBanc:
+          type: string
+          example: '2473367003079'
+        swift:
+          type: string
+          example: '0'
+        codMoneda:
+          type: string
+          example: 'EUR'
+        idUsuario:
+          type: number
+          example: 36
+    DatosSponsor:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 4 
+        idCtaBan:
+          type: number
+          example: 6
+    
+        

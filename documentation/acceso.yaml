@@ -1,0 +1,225 @@
+paths:
+  /acceso/Usuario/id/{idUsuario}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Lista de accesos por el identificador de usuario
+      produces:
+      - application/json
+      operationId: listAccesoUsuario
+      parameters:
+        - name: idUsuario
+          in: path
+          description: El identificador del Usuario
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Objeto con detalles del Acceso del Usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Acceso"  
+  /acceso/eliminar/codRol/{codRol}:   
+    delete: 
+      tags:  
+        - Administrativo 
+      summary: Elimina un acceso por codigo de ROL
+      produces:
+      - application/json
+      operationId: eliminaAcceso
+      parameters:
+        - name: codRol
+          in: path
+          description: El identificador del ROL
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Objeto con detalles del Acceso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Roles"  
+  /acceso/registrar:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Registro de un acceso
+      produces:
+      - application/json
+      operationId: setAcceso
+      requestBody: 
+        description: Datos de Acceso para su respectivo registro
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/AccesoArregloCrear'         
+      responses: 
+        200:
+          description: Objeto con detalles del Acceso
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/AccesoArregloCrear'
+  /acceso/id/{codRol}:
+    get:
+      tags:  
+        - Administrativo 
+      summary: Lista de un rol por su identificador
+      produces:
+      - application/json
+      operationId: codRol
+      parameters:
+        - name: codRol
+          in: path
+          description: El identificador del Rol
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Objeto con detalles del Acceso con su rol
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Roles"
+  /acceso/actualizar:
+    put:
+      tags:  
+        - Administrativo 
+      summary: Editar el acceso de un rol
+      produces:
+      - application/json
+      operationId: actualizarAcceso
+      requestBody: 
+        description: Datos del rol a editar
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/AccesoArreglo'              
+      responses: 
+        200:
+          description: Objeto con detalles del Acceso
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/AccesoArreglo'                  
+components:
+  schemas:
+    Acceso:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          example: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Usuario'
+    Usuario:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: 'Carlos'
+        codRol:
+          type: string
+          example: 'SUP'
+        descripcion:
+          type: string
+          example: 'SUPERADMIN' 
+        modulo:
+          type: string
+          example: 'MADM'  
+        seccion:
+          type: string
+          example: 'USU'   
+        escritura:
+          type: number
+          example: '1'     
+        lectura:
+          type: number
+          example: '1'
+    DatosAcceso:
+      type: object
+      properties:
+          codRol:
+            type: string
+            example: 'ADM'
+          codModulo:
+            type: string
+            example: 'MADM'
+          codSeccion:
+            type: string
+            example: 'USU'
+          escritura:
+            type: int
+            example: 1
+          lectura:
+            type: int
+            example: 1
+          idUsuReg:
+            type: int
+            example: 1
+          idUsuAct:
+            type: int
+            example: 1
+    Roles:
+      type: object
+      properties:
+        idAcceso:
+          type: numero
+          example: 20
+        codModulo:
+          type: string
+          example: 'MADM'
+        codSeccion:
+          type: string
+          example: 'USU'
+        escritura:
+          type: int
+          example: 1
+        lectura:
+          type: int
+          example: 1 
+    UpdateAcceso:
+      type: object
+      properties:
+        idAcceso:
+          type: numero
+          example: 20
+        codRol:
+            type: string
+            example: 'ADM'
+        codModulo:
+          type: string
+          example: 'MADM'
+        codSeccion:
+          type: string
+          example: 'USU'
+        escritura:
+          type: int
+          example: 1
+        lectura:
+          type: int
+          example: 1  
+        estado:
+          type: string
+          example: 'ACT'
+        idUsuAct:
+          type: int
+          example: 1
+
+    AccesoArreglo:
+      type: array
+      items:
+        $ref: "#/components/schemas/UpdateAcceso"
+
+    AccesoArregloCrear:
+      type: array
+      items:
+        $ref: "#/components/schemas/DatosAcceso"
+          
+                  

@@ -1,0 +1,328 @@
+/sponsor/tercero/crear:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Registro de un usuario tercero
+      produces:
+      - application/json
+      operationId: setTSponsor
+      requestBody: 
+        description: Datos
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosT'         
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario Tercero
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Tercero'
+/sponsors/proveedores/:   
+    post:  
+      tags:  
+        - Administrativo 
+      summary: Listar Sponsor y sus proveedores, puede mandar vacio para listar todos los sponsor
+      produces:
+      - application/json
+      operationId: buscarsponsor
+      requestBody: 
+        description: Objeto Sponsor
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/SponsorXId'         
+      responses: 
+        200:
+          description: inicio de sesion correcto
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Sponsor' 
+/sponsors/proveedores/id:   
+    post:  
+      tags:  
+        - Administrativo 
+      summary: Listar Sponsor o proveedores por su ID y estado
+      produces:
+      - application/json
+      operationId: sponsorXid
+      requestBody: 
+        description: Objeto Sponsor
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/SponsorXId'         
+      responses: 
+        200:
+          description: inicio de sesion correcto
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Sponsor'
+/sponsors/ruc/{ruc}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Lista a un sponsor mediante la busqueda de su ruc
+      produces:
+      - application/json
+      operationId: listSponsor
+      parameters:
+        - name: ruc
+          in: path
+          description: el ruc del sponsor
+          required: false
+          type: string          
+      responses: 
+        200:
+          description: Objeto con detalles del sponsor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tercero"   
+
+/sponsors/proveedores/estado/{idSponsor}:
+    delete: 
+      tags:  
+        - Administrativo 
+      summary: Editar estado de un Proveedor
+      produces:
+      - application/json
+      operationId: updateProveedor
+      parameters:
+        - name: idSponsor
+          in: path
+          description: el ID del sponsor
+          required: false
+          type: number          
+      responses: 
+        200:
+          description: Objeto con detalles del sponsor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tercero"                 
+
+/sponsors/listConfig/:   
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Lista la configuracion de un sponsors requerido
+      produces:
+      - application/json
+      operationId: listSponsorConfig
+      requestBody: 
+        description: Objeto Configuracion de Sponsor
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/SponsorConfig'        
+      responses: 
+        200:
+          description: Objeto con detalles del sponsor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sponsor"
+
+/sponsors/listPrograma/:   
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Lista los programas de un sponsors requerido
+      produces:
+      - application/json
+      operationId: listSponsorPrograma
+      requestBody: 
+        description: Objeto Configuracion de Sponsor
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/SponsorPrograma'        
+      responses: 
+        200:
+          description: Objeto con detalles del sponsor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SponsorListPrograma"
+
+/sponsors/config/:   
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Configuracion de un sponsors requerido
+      produces:
+      - application/json
+      operationId: sponsorConfig
+      requestBody: 
+        description: Objeto Configuracion de Sponsor
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/SConfig'        
+      responses: 
+        200:
+          description: Objeto con detalles del sponsor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sponsor"
+              
+components:
+  schemas:
+    DatosT:
+      type: object
+      properties:
+        tipTercero:
+          type: string
+          example: 'Natural'
+        nombre:
+          type: string
+          example: 'Luis'
+        apePat:
+          type: string
+          example: 'Gonzales'
+        apeMat:
+          type: string
+          example: 'Gonzales'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'
+        numeroDoc:
+          type: string
+          example: '123456789'
+        direccion:
+          type: string
+          example: 'Av. America #1234'
+        correo:
+          type: string
+          example: 'acfactori@gmail.com'
+        tipoDoc:
+          type: string
+          example: 'DNI'
+        telefono:
+          type: string
+          example: '123456789'
+        idPadre:
+          type: number
+          example: 0
+        idUsuReg:
+          type: number
+          example: 1
+        idUsuAct:
+          type: number
+          example: 1
+        idSponsor:
+          type: number
+          example: 4
+        codPrograma:
+          type: string
+          example: 'FICO'
+    Sponsor:
+      type: object
+      properties:
+        razonSocial:
+          type: string
+          example: 'Duplez S.A'
+        numeroDocumento:
+          type: string
+          example: '20136547899'
+        idSponsor:
+          type: number
+          example: 1
+        idTercero:
+          type: number
+          example: 21
+        idproveedor:
+          type: number
+          example: 2
+    
+    SponsorID:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 1
+        codPrograma:
+          type: string
+          example: 'FICO'
+
+    SponsorXId:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 8
+        estado:
+          type: string
+          example: 'ACT'
+        codPrograma:
+          type: string
+          example: 'FICO'
+    
+    SponsorConfig:
+      type: object
+      properties:
+        idSponsors:
+          type: number
+          example: 4
+        estado:
+          type: string
+          example: 'ACT'
+        producto:
+          type: string
+          example: 'PPR'
+
+    SponsorPrograma:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 9
+        estado:
+          type: string
+          example: 'ACT'
+        codPrograma:
+          type: string
+          example: 'FIVE'
+
+    SponsorListPrograma:
+      type: object
+      properties:
+        codProducto:
+          type: string
+          example: 'FAC'
+        producto:
+          type: string
+          example: 'Factoring'
+    
+    SConfig:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 4
+        codProducto:
+          type: string
+          example: 'PPR'
+        codConfigProducto:
+          type: number
+          example: 27
+        valor:
+          type: string
+          example: '50'
+        idUsuReg:
+          type: number
+          example: 1
+        idUsuAct:
+          type: number
+          example: 1

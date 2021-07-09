@@ -1,0 +1,112 @@
+paths:
+  /valor/registro/array:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Obtiene datos de la configuracion del producto
+      produces:
+      - application/json
+      operationId: findValor
+      requestBody: 
+        description: Datos con la configuracion de un parametro.
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/ValorList'         
+      responses: 
+        200:
+          description: Retorna los datos de la Configuracion agregado correctamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ValorList'  
+
+  /valor/listar/codVal/{codVal}:   
+      get: 
+        tags:  
+          - Administrativo 
+        summary: Listado de valores de una configuracion mediante la busqueda por el codigo del valor 
+        produces: 
+        - application/json
+        operationId: valoresList
+        parameters:
+          - name: codVal
+            in: path
+            description: codigo del valor, identificador representado por un string, ejemplo 'PPR'
+            required: true
+            type: string          
+        responses: 
+          200:
+            description: Retorna los datos de la configuracion
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ValorList"    
+
+  /valor/listarInhabilitados/codVal/{codVal}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Listado de valores de una configuracion mediante la busqueda por el codigo del valor 
+      produces: 
+      - application/json
+      operationId: valoresListInhabilitado
+      parameters:
+        - name: codVal
+          in: path
+          description: codigo del valor, identificador representado por un string, ejemplo 'PPR'
+          required: true
+          type: string          
+      responses: 
+        200:
+          description: Retorna los datos de la configuracion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValorList"      
+
+  /valor/actualizar:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Actualizacion de una configuracion
+      produces:
+      - application/json
+      operationId: editaValor
+      requestBody: 
+        description: Datos a modificar de la configuracion
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/ValorList'         
+      responses: 
+        200:
+          description: Configuracion editado correctamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ValorList'   
+
+components:
+  schemas:
+    ValorList:
+      type: array
+      items:
+          $ref: "#/components/schemas/Valor"
+    Valor:
+      type: object
+      properties:
+        codVal:
+          type: string
+          example: 'PPR'
+        idParametro:
+          type: number
+          example: 23
+        valor:
+          type: string
+          example: 'AMB2'
+        adicional:
+          type: string
+          example: 'cambia cada semestre' 

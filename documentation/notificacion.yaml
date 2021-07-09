@@ -1,0 +1,206 @@
+paths:
+  /notificacion/listar:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Lista de las últimas notificaciones
+      produces:
+      - application/json
+      operationId: listar
+      requestBody: 
+        description: Tipo de notificacion y el usuario
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Notificaciones'  
+      responses: 
+        200:
+          description: Objeto con detalles de la notificacion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notificacion"   
+
+  /notificacion/id/{idNotificacion}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Lista de una notificacion por su respectivo ID
+      produces:
+      - application/json
+      operationId: listNot
+      parameters:
+        - name: idNotificacion
+          in: path
+          description: El id de la Notificacion
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Objeto con detalles de la Notificacion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificacionId"
+
+  /notificacion/registrar:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Registro de una notificacion
+      produces:
+      - application/json
+      operationId: setNotificacion
+      requestBody: 
+        description: Datos de Notificacion para su registro
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosNotificacion'         
+      responses: 
+        200:
+          description: Objeto con detalles de una notificación
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosNotificacion'  
+
+  /notificacion/actualizar:
+    put:
+      tags:  
+        - Administrativo 
+      summary: Editar los datos a una respectiva notificacion
+      produces:
+      - application/json
+      operationId: actualizarNotificacion
+      requestBody: 
+        description: Datos de Notificacion
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosNotificacionUpdate'              
+      responses: 
+        200:
+          description: Objeto con detalles de los datos de la notificación
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosNotificacionUpdate' 
+  /notificacion/eliminar/{idNotificacion}:
+    delete:
+      tags:  
+        - Administrativo 
+      summary: Inhabilitar estado de una notificacion
+      produces:
+      - application/json
+      operationId: actualizarEstadoNotificacion
+      parameters:
+        - name: idNotificacion
+          in: path
+          description: El id de la notificacion que se desea inhabilitar
+          required: true
+          type: Number              
+      responses: 
+        200:
+          description: Objeto con detalles de la notificacion para inhabilitar
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/NotificacionId'        
+components:
+  schemas:
+    Notificaciones:
+      type: object
+      properties:
+        tipNotif:
+          type: string
+          example: 'EXT'
+        tipNotEtiqueta:
+          type: string
+          example: 'SIMU'    
+
+    DatosNotificacion:
+      type: object
+      properties:
+        idUsuario:
+          type: int
+          example: 30
+        notificacion:
+          type: string
+          example: 'Bienvenida'
+        tipNotEtiqueta:
+          type: string
+          example: 'BIEV'
+        asunto:
+          type: string
+          example: 'Bienvenida'
+        de:
+          type: string
+          example: 'notificaciones@gmail.com'
+        para:
+          type: string
+          example: 'acfactori@gmail.com'
+        cc:
+          type: string
+          example: 'ac@gmail.com' 
+        cco:
+          type: string
+          example: 'ac@gmail.com'
+        mensaje:
+          type: string
+          example: 'Bievenido'
+        tipNotif:
+          type: string
+          example: 'INT'
+        fecDesde:
+          type: date
+          example: '2020-03-25'
+        fecHasta:
+          type: date
+          example: '2020-03-31'    
+
+    DatosNotificacionUpdate:
+      type: object
+      properties:
+        idNotificacion:
+          type: int
+          example: 61
+        notificacion:
+          type: string
+          example: 'Simula'
+        asunto:
+          type: string
+          example: 'Bienvenida'
+        para:
+          type: string
+          example: 'acfactori@gmail.com'
+        cc:
+          type: string
+          example: 'ac@gmail.com' 
+        cco:
+          type: string
+          example: 'ac@gmail.com'
+        mensaje:
+          type: string
+          example: 'Bievenido'
+        fecDesde:
+          type: date
+          example: '2020-03-25'
+        fecHasta:
+          type: date
+          example: '2020-03-31'
+        estadoNot:
+          type: string
+          example: 'REG'
+        estado:
+          type: string
+          example: 'INA'
+    NotificacionId:
+      type: object
+      properties:
+        idNotificacion:
+          type: number
+          example: 1   

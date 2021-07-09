@@ -1,0 +1,92 @@
+paths:
+  /log/crear:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Registro de un evento
+      produces:
+      - application/json
+      operationId: setLog
+      requestBody: 
+        description: Datos de un evento para registrarlo
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosLog'         
+      responses: 
+        200:
+          description: Objeto con detalles de un evento
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosLog'
+  /log/listar/fecha:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Lista de un evento mediante un intervalo de fecha
+      produces:
+      - application/json
+      operationId: setFechaLog
+      requestBody: 
+        description: Intervalos de fecha en las cuales se hacen la busqueda
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosFecha'         
+      responses: 
+        200:
+          description: Objeto con detalles del evento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Log"              
+components:
+  schemas:
+    DatosLog:
+      type: object
+      properties:
+        idUsuario:
+          type: int
+          example: 1
+        proceso:
+          type: string
+          example: 'iniciar sesion'
+        url:
+          type: string
+          example: 'www.google.com'
+    Log:
+      type: object
+      properties:
+        idUsuario:
+          type: int
+          example: 1
+        proceso:
+          type: string
+          example: 'iniciar sesion'
+        fechaRegistro:
+          type: date
+          example: '08-03-2021'
+        url:
+          type: string
+          example: 'www.google.com'
+    DatosFecha:
+      type: object
+      properties:
+        fechaInit:
+          type: date
+          example: '2021-03-01'
+        fechaFin:
+          type: date
+          example: '2021-05-01'
+        usuario:
+          type: number
+          example: 1
+        pagina:
+          type: int
+          example: '0'
+        fila:
+          type: int
+          example: '5'

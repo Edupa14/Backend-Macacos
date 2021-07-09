@@ -1,0 +1,232 @@
+/procesar/planilla: 
+    post:
+      tags:
+        - Operativo 
+      summary: Procesar datos de la planilla al cargar un archivo excel
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      operationId: getExcel
+      requestBody: 
+        description: Objeto excel
+        required: true
+        content:
+          'multipart/form-data':
+            schema: 
+              type: object
+              properties: 
+                excel:
+                  type: file
+                Datos:
+                  $ref: '#/components/schemas/Datos'
+
+      responses: 
+        201:
+          description: Un objeto con detalles del Excel
+          content:
+            application/json:
+              schema: 
+                  $ref: '#/components/schemas/Planilla'
+
+/subir/archivo/planilla:
+  post:
+    tags:
+      - Operativo
+    summary: Subir archivo xml o pdf a un detalle de una planilla procesada de un excel
+    consumes:
+      - multipart/form-data
+    produces:
+      - application/json
+    operationId: getArchivo
+    requestBody:
+      description: Objeto XML o PDF
+      required: true
+      content:
+        'multipart/form-data':
+          schema:
+            type: object
+            properties:
+              excel:
+                type: file
+              Datos:
+                $ref: '#/components/schemas/Datos'
+
+    responses:
+      201:
+        description: Respuesta de carga exitosa del archivo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Planilla'
+
+/planilla/consultar:   
+    post: 
+      tags:  
+        - Operativo  
+      summary: Listar planilla por numero de operacion o estado y fecha de registro
+      produces:
+      - application/json
+      operationId: findTransaccion
+      requestBody: 
+        description: Datos de Filtrado
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosPlatilla'          
+      responses:
+        200:
+          description: Objeto con detalles del Cliente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Planilla"
+
+/transaccion/buscar/filtro:    
+    post: 
+      tags:  
+        - Operativo 
+      summary: Obtiene datos de las transacciones segun el filtro aplicado
+      produces:
+      - application/json
+      operationId: fundBuscarTransaccion
+      requestBody: 
+        description: Objeto con los datos de la transaccion
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/BuscarTransaccion'         
+      responses: 
+        200:
+          description: Configuracion agregado correctamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/BuscarTransaccion'  
+  
+
+components:
+  schemas:
+    Datos:
+      type: object
+      properties: 
+        idUsuario:
+          type: number
+          example: 1
+        idSponsor: 
+          type: number
+          example: 1
+
+    Planilla:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          example: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaccion'
+
+    BuscarTransaccion:
+      type: object
+      properties:
+        fechaRegistroInicio:
+          type: string
+          example: '2021-3-08'
+        fechaRegistroFin:
+          type: string
+          example: '2021-6-10' 
+        fechaEmisionInicio:
+          type: string
+          example: '09/03/2021' 
+        fechaEmisionFin:
+          type: string
+          example: '09/06/2021' 
+        fechaVencimientoInicia:
+          type: string
+          example: '09/03/2021' 
+        fechaVencimientoFin:
+          type: string 
+          example: '09/63/2021'
+        numOperacion:
+          type: number
+          example: 1
+        numDocu:
+          type: string
+          example: 'L-2958'
+        estado:
+          type: string
+          example: 'ACT'
+        idSponsor:
+          type: number
+          example: 1
+        idProveedor:
+          type: number
+          example: 1
+        codProducto:
+          type: string
+          example: 'PPR'
+        fila:
+          type: number
+          example: 10
+        pagina:
+          type: number
+          example: 1
+        idLiquidacion:
+          type: number
+          example: 6
+
+    Transaccion:
+      type: object
+      properties:
+        ruc:
+          type: string
+          example: '20604769699'
+        cliente:
+          type: string
+          example: 'test'
+        tipoDoc:
+          type: string
+          example: 'LET' 
+        numDoc:
+          type: string
+          example: 'L-1234'  
+        fechaEmision:
+          type: string
+          example: '08/02/20'   
+        fechaVencimiento:
+          type: string
+          example: '08/05/20'     
+        tipoMoneda:
+          type: string
+          example: 'PEN'
+        montoNeto:
+          type: number
+          example: 1000
+        tipoProducto:
+          type: string
+          example: 'DESCUENTO'
+    DatosPlatilla:
+      type: object
+      properties:
+        numOperacion:
+          type: number
+          example: 1
+        estado:
+          type: string
+          example: 'APRO'
+        fechaInit:
+          type: date
+          example: '2021-03-01'
+        fechaFin:
+          type: date
+          example: '2021-03-01'
+        idLiquidacion:
+          type: number
+          example: 6
+        idSponsor:
+          type: number
+          example: 4

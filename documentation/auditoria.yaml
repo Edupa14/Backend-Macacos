@@ -1,0 +1,109 @@
+paths:
+  /auditoria/crear:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Registro de una auditoria
+      produces:
+      - application/json
+      operationId: setAuditoria
+      requestBody: 
+        description: Datos de Auditoria para su registro
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosAuditoria'         
+      responses: 
+        200:
+          description: Objeto con detalles de una auditoria
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosAuditoria'
+
+  /auditoria/listar/fecha/:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Lista de una Auditoria mediante un intervalo de fecha
+      produces:
+      - application/json
+      operationId: setFecha
+      requestBody: 
+        description: Intervalos de fecha en las cuales se hacen la busqueda
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosFechaAud'  
+      responses: 
+        200:
+          description: Objeto con detalles de la Auditoria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Auditoria"              
+components:
+  schemas:
+    DatosAuditoria:
+      type: object
+      properties:
+        idUsuario:
+          type: int
+          example: 1
+        operacion:
+          type: string
+          example: 'iniciar sesion'
+        tabla:
+          type: string
+          example: 'ejemplo'
+        idReg:
+          type: int
+          example: 1
+        atributos:
+          type: string
+          example: 'ejemplo'
+    Auditoria:
+      type: object
+      properties:
+        fechaRegistro:
+          type: date
+          example: '08-03-2021'
+        operacion:
+          type: string
+          example: 'iniciar sesion'        
+        idUsuario:
+          type: int
+          example: 1
+        tabla:
+          type: string
+          example: 'usuario'
+        estadoT:
+          type: string
+          example: 'ERROR'
+        idReg:
+          type: int
+          example: 1
+        atributos:
+          type: string
+          example: 'objeto usuario'
+        
+    DatosFechaAud:
+      type: object
+      properties:
+        fechaInit:
+          type: date
+          example: '2021-03-01'
+        fechaFin:
+          type: date
+          example: '2021-05-01'
+        usuario:
+          type: number
+          example: 1
+        pagina:
+          type: number
+          example: 1
+        fila:
+          type: number
+          example: 5

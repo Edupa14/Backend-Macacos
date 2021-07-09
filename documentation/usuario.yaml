@@ -1,0 +1,369 @@
+paths:
+  /usuarios/login:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Verifica si el correo y clave ingresado al momento del logeo es correcto
+      produces:
+      - application/json
+      operationId: findLogin
+      requestBody: 
+        description: Datos de entrada para el login
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Login'         
+      responses: 
+        200:
+          description: Obtiene los datos del usuario con su rol y accesos asignados previamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Usuario'  
+
+  /usuario/actualizar/contrasenia:    
+    put: 
+      tags:  
+        - Administrativo 
+      summary: Actualiza la contraseña segun el id del usuario
+      produces:
+      - application/json
+      operationId: updatePass
+      requestBody: 
+        description: identificador unico el usuario
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/CambioPass'         
+      responses: 
+        200:
+          description: Obtiene los datos del usuario con su rol y accesos asignados previamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/CambioPass0'   
+
+  /usuarios/crear:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Registro de un usuario
+      produces:
+      - application/json
+      operationId: setUSuario
+      requestBody: 
+        description: Datos del usuario ejemplo para el respectivo registro.
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosUsuario'         
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Usuario' 
+
+
+
+  /usuario/id/{idUsuario}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Lista de un usuario por su respectivo ID
+      produces:
+      - application/json
+      operationId: listUsuario
+      parameters:
+        - name: idUsuario
+          in: path
+          description: El id del Usuario 
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"   
+
+  /usuario/listar:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Lista de todos los usuario
+      produces:
+      - application/json
+      operationId: listUsuarios        
+      responses: 
+        200:
+          description: Objeto con detalles del Usuarios
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"   
+                
+    
+  /usuario/actualizar:
+    put:
+      tags:  
+        - Administrativo 
+      summary: Editar los datos a un respectivo usuario
+      produces:
+      - application/json
+      operationId: actualizarUsuario
+      requestBody: 
+        description: Datos del Usuario
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/UpdateUsuario'              
+      responses: 
+        200:
+          description: Objeto con detalles de los datos del Usuario
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UpdateUsuario'
+  
+  /usuario/eliminar:
+    post:
+      tags:  
+        - Administrativo 
+      summary: Inhabilitar estado solo a usuario
+      produces:
+      - application/json
+      operationId: actualizarEstadoUsuario
+      requestBody: 
+        description: Datos del usuario ejemplo para el respectivo registro.
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/EliminarUsuario'                            
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario para inhabilitar
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UsuarioId'
+  
+  /usuario/tercero/eliminar/{idUsuario}:
+    delete:
+      tags:  
+        - Administrativo 
+      summary: Inhabilitar estado a usuario y a tercero a la vez
+      produces:
+      - application/json
+      operationId: actualizarEstadoUsuarioTercero
+      parameters:
+        - name: idUsuario
+          in: path
+          description: El id del Usuario que se desea inhabilitar
+          required: true
+          type: Number         
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario para inhabilitar
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UsuarioId'
+
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        correo:
+          type: string
+          example: 'jGonzales@gmail.com'
+        clave:
+          type: string
+          example: '123abc'
+    DatosUsuario:
+      type: object
+      properties:
+        clave:
+          type: string
+          example: 'abc123' 
+        codRol:
+          type: string
+          example: 'ADM'
+        tipTercero:
+          type: string
+          example: 'Natural'
+        nombre:
+          type: string
+          example: 'Luis'
+        apePat:
+          type: string
+          example: 'Gonzales'
+        apeMat:
+          type: string
+          example: 'Gonzales'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'
+        numeroDoc:
+          type: string
+          example: '123456789'
+        correo:
+          type: string
+          example: 'acfactori@gmail.com'
+        tipoDoc:
+          type: string
+          example: 'DNI'
+        telefono:
+          type: string
+          example: '123456789'
+        idPadre:
+          type: number
+          example: 1
+        idUsuReg:
+          type: number
+          example: 1
+        idUsuAct:
+          type: number
+          example: 1
+        Observacion:
+          type: string
+          example: 'Eliminado por inactividad'
+
+    UpdateUsuario:
+      type: object
+      properties:
+        idUsuario:
+          type: number
+          example: 1
+        clave:
+          type: string
+          example: 'abc123'
+        codRol:
+          type: string
+          example: 'ADM'
+        idUsuAct:
+          type: number
+          example: 1
+        estado:
+          type: string
+          example: 'ACT'
+        tipTercero:
+          type: string
+          example: 'Natural'
+        nombre:
+          type: string
+          example: 'Luis'
+        apePat:
+          type: string
+          example: 'Gonzales'
+        apeMat:
+          type: string
+          example: 'Gonzales'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'       
+        telefono:
+          type: string
+          example: '123456789'
+        idPadre:
+          type: number
+          example: 1
+        estadoT:
+          type: string
+          example: 'ACT'
+    Usuario:
+      type: object
+      properties:
+        idUsuario:
+          type: number
+          example: 1
+        codRol:
+          type: string
+          example: 'ADM'
+        estado:
+          type: string
+          example: 'ACT'
+        tipTercero:
+          type: string
+          example: 'Natural'
+        nombre:
+          type: string
+          example: 'Luis'
+        apePat:
+          type: string
+          example: 'Gonzales'
+        apeMat:
+          type: string
+          example: 'Gonzales'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'
+        numeroDoc:
+          type: string
+          example: '123456789'
+        tipoDoc:
+          type: string
+          example: 'DNI'
+        tipoTercero:
+          type: string
+          example: '37'
+        codModulo:
+          type: string
+          example: 'MOPE'
+        escritura:
+          type: string
+          example: '1'
+        lectura:
+          type: string
+          example: '1'
+        idPadre:
+          type: number
+          example: 0
+        estadoT:
+          type: string
+          example: 'ACT'
+      
+    UsuarioId:
+      type: object
+      properties:
+        idUsuario:
+          type: number 
+          example: 1   
+
+    EliminarUsuario:
+      type: object
+      properties:
+        idUsuario:
+          type: number 
+          example: 1  
+        observacion:
+          type: string 
+          example: 'Inactividad'
+
+    CambioPass:
+      type: object
+      properties:
+        idUsuario:
+          type: number
+          example: 10   
+        idUsuAct:
+          type: number
+          example: 1   
+        clave:
+          type: string
+          example: 'abc123'   
+    
+    CambioPass0:
+      type: object
+      properties:
+        RSPTA:
+          type: number
+          example: 0   

@@ -1,0 +1,244 @@
+paths:
+  /tercero/crear:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Registro de un usuario tercero
+      produces:
+      - application/json
+      operationId: setTercero
+      requestBody: 
+        description: Datos como ejemplo para el respectivo registro
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DatosTercero'         
+      responses: 
+        200:
+          description: Objeto con detalles del Usuario Tercero
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Tercero' 
+
+
+
+  /tercero/id/{idTercero}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Lista de un Tercero por su respectivo ID
+      produces:
+      - application/json
+      operationId: listTercero
+      parameters:
+        - name: idTercero
+          in: path
+          description: El id del Tercero
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Objeto con detalles del Tercero
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tercero"   
+
+  /tercero/listar:   
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Lista de todos los Tercero
+      produces:
+      - application/json
+      operationId: listTerceroT  
+      requestBody: 
+        description: Datos como ejemplo
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DTercero'  
+      responses: 
+        200:
+          description: Objeto con detalles de tercero
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tercero"              
+    
+  /tercero/actualizar:
+    put:
+      tags:  
+        - Administrativo 
+      summary: Editar los datos a un respectivo usuario tercero
+      produces:
+      - application/json
+      operationId: actualizarTercero
+      requestBody: 
+        description: Datos del tercero
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/UpdateTercero'              
+      responses: 
+        200:
+          description: Objeto con detalles de los datos del Tercero
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UpdateTercero'      
+
+  /tercero/eliminar/{idTercero}:
+    delete:
+      tags:  
+        - Administrativo 
+      summary: Inhabilitar estado de un tercero
+      produces:
+      - application/json
+      operationId: actualizarEstadoTercero
+      parameters:
+        - name: idTercero
+          in: path
+          description: El id del Usuario Tercero que se desea inhabilitar
+          required: true
+          type: Number              
+      responses: 
+        200:
+          description: Objeto con detalles del Tercero para inhabilitar
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/TerceroId'
+
+components:
+  schemas:
+    DatosTercero:
+      type: object
+      properties:
+        tipTercero:
+          type: string
+          example: 'Natural'
+        nombre:
+          type: string
+          example: 'Luis'
+        apePat:
+          type: string
+          example: 'Gonzales'
+        apeMat:
+          type: string
+          example: 'Gonzales'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'
+        numeroDoc:
+          type: string
+          example: '123456789'
+        direccion:
+          type: string
+          example: 'Av. America #1234'
+        correo:
+          type: string
+          example: 'acfactori@gmail.com'
+        tipoDoc:
+          type: string
+          example: 'DNI'
+        telefono:
+          type: string
+          example: '123456789'
+        idPadre:
+          type: number
+          example: 1
+        idUsuReg:
+          type: number
+          example: 1
+        idUsuAct:
+          type: number
+          example: 1
+
+    UpdateTercero:
+      type: object
+      properties:
+        idTercero:
+          type: number
+          example: 1
+        tipTercero:
+          type: string
+          example: 'Juridico'
+        nombre:
+          type: string
+          example: 'Willy'
+        apePat:
+          type: string
+          example: 'Rodriguez'
+        apeMat:
+          type: string
+          example: 'Rodriguez'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'       
+        telefono:
+          type: string
+          example: '123456789'
+        idPadre:
+          type: number
+          example: 1
+        estadoT:
+          type: string
+          example: 'ACT'
+        idUsuAct:
+          type: number
+          example: 1
+
+    Tercero:
+      type: object
+      properties:
+        tipTercero:
+          type: string
+          example: 'Natural'
+        nombre:
+          type: string
+          example: 'Luis'
+        apellidos:
+          type: string
+          example: 'Diaz'
+        correo:
+          type: string
+          example: 'acfactori@gmail.com'
+        telefono:
+          type: string
+          example: '123456789'
+        razonSocial:
+          type: string
+          example: 'AC Factori S.A'
+        numeroDoc:
+          type: string
+          example: '123456789'
+        tipoDoc:
+          type: string
+          example: 'DNI'
+        tipoTercero:
+          type: string
+          example: '37'
+        idPadre:
+          type: number
+          example: '0'
+    DTercero:
+      type: object
+      properties:
+        tipTercero:
+          type: string
+          example: 'NAT'
+    TerceroId:
+      type: object
+      properties:
+        idTercero:
+          type: number
+          example: 1      
+   
+
+    
+              

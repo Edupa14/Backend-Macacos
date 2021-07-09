@@ -1,0 +1,241 @@
+/parametro/listar/:   
+    post: 
+      tags:  
+        - Administrativo  
+      summary: Listado de los valores de un parametro dependiendo de su etiqueta o su identificador padre
+      produces:
+      - application/json
+      operationId: findParametro
+      requestBody: 
+        description: Datos de entrada para relizar la busqueda de un parametro
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/ParametroEtiqueta'
+      responses: 
+        200:
+          description: Datos que retorna el servidor luego de la consulta de busqueda
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Parametro"
+
+/parametro/listar/valores:
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Obtiene un parametro buscado por su valor
+      produces: 
+      - application/json
+      operationId: valor
+      requestBody: 
+        description: Datos de entrada 
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Auto'    
+      responses: 
+        200:
+          description: Devuelve los datos del parametro buscado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Parametro"  
+
+/parametro/listar/id/{idParametro}:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Obtiene un parametro buscado por su identificador
+      produces: 
+      - application/json
+      operationId: parametroid
+      parameters:
+        - name: idParametro
+          in: path
+          description: identificador del parametro. representado por un numero entero
+          required: true
+          type: Number          
+      responses: 
+        200:
+          description: Devuelve los datos del parametro buscado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Parametro"   
+
+/parametro/listar/etiquetas:   
+    get: 
+      tags:  
+        - Administrativo 
+      summary: Obtiene la lista de etiquetas de los parametros
+      produces: 
+      - application/json
+      operationId: parametroEtiqeuta
+      responses: 
+        200:
+          description: Devuelve la lista de etiquetas que existen en parametros
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/parametroEtiquetas"   
+
+
+/parametro/crear:    
+    post: 
+      tags:  
+        - Administrativo 
+      summary: Creacion de un nuevo parametro
+      produces:
+      - application/json
+      operationId: PostParametro
+      requestBody: 
+        description: Datos de entrada con las nuevas caracteristicas del parametro a registrar
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/ParametroCrear'
+        
+      responses: 
+        200:
+          description: parametro agreado sin errores
+
+/parametro/actualizar:
+    put:
+      tags:  
+        - Administrativo 
+      summary: Edita un parametro segun el identificador que obtiene como dato de entrada
+      produces:
+      - application/json
+      operationId: actualizarParametro
+      requestBody: 
+        description: Datos del parametro a actualizar 
+        required: true  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Parametro'              
+      responses: 
+        200:
+          description: Se obtiene una respuesta de 0 si el parametro fue editado correctamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Parametro'
+
+/parametro/eliminar/{idParametro}:
+    delete:
+      tags:  
+        - Administrativo 
+      summary: Se eliminar el parametro Lógicamente mediante una actualizan de su estado a INA
+      produces:
+      - application/json
+      operationId: eliminarParametro
+      parameters:
+        - name: idParametro
+          in: path
+          description: Identificador del parametro a eliminar
+          required: true
+          type: Number             
+      responses: 
+        200:
+          description: Retorna el id del parametro eliminado si la fucnion se ejecuto correctamente
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ParametroID'
+
+components:
+  schemas:
+    Parametro:
+      type: object
+      properties: 
+        idParametro:
+          type: number
+          example: 1
+        idPadre: 
+          type: number
+          example: 0
+        estado: 
+          type: string
+          example: 'ACT'
+        etiqueta: 
+          type: string
+          example: 'ROL'  
+        valor: 
+          type: string
+          example: 'ADM'  
+        descripcion: 
+          type: string
+          example: 'Administrador'   
+
+    ParametroCrear:
+      type: object
+      properties: 
+        idPadre: 
+          type: number
+          example: 1
+        etiqueta: 
+          type: string
+          example: 'ROL'  
+        valor: 
+          type: string
+          example: 'ADM'  
+        descripcion: 
+          type: string
+          example: 'ADministrador'   
+        tipoInput: 
+          type: string
+          example: 'valor'
+
+    ParametroID:
+      type: object
+      properties:
+        idParametro:
+          type: number
+          example: 78  
+
+    
+    ParametroEtiqueta:
+      type: object
+      properties:
+        idPadre:
+          type: number
+          example: 0 
+        etiqueta:
+          type: string
+          example: 'PROGRAMA' 
+        estado:
+          type: string
+          example: 'ACT'  
+        tipoInput:
+          type: string
+          example: 'valor'  
+        validacion:
+          type: int
+          example: 1 
+
+    parametroEtiquetas:
+      type: object
+      properties:
+        etiqueta:
+          type: string
+          example: 'Banco'   
+    
+    Auto:
+      type: object
+      properties:
+        idSponsor:
+          type: number
+          example: 4
+        codigoPro:
+          type: string
+          example: 'PPR'
+        valor:
+          type: string
+          example: 'MMAX'
+             
+          

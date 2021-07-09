@@ -1,0 +1,78 @@
+paths:
+  /liquidacion/simulacion/:   
+      post: 
+        tags:  
+          - Operativo  
+        summary: mostrar simulacion del monto abonar
+        produces:
+        - application/json
+        operationId: simulacionID
+        requestBody: 
+          description: datos de entrada para ejecutar la operacion del monto abonar
+          required: true  
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Liquidacion'
+        responses: 
+          200:
+            description: Monto abonar
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Simulacion"
+
+  /liquidacion/editar/:
+      post:
+        tags:  
+          - Operativo 
+        summary: Editar estado de una liquidacion
+        produces:
+        - application/json
+        operationId: setLiquidacion
+        requestBody: 
+          description: Datos de una liquidacion para editar
+          required: true  
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DatosLiquidacion'         
+        responses: 
+          200:
+            description: Objeto de una liquidacion
+            content: 
+              application/json:
+                schema: 
+                  $ref: '#/components/schemas/DatosLiquidacion'
+
+components:
+  schemas:
+    Liquidacion:
+      type: object
+      properties: 
+        monto:
+          type: number
+          example: 10000
+        fechaVencimiento: 
+          type: string
+          example: '2021-04-10'
+
+    Simulacion:
+      type: object
+      properties: 
+        retorno:
+          type: number
+          example: 1000.00
+
+    DatosLiquidacion:
+      type: object
+      properties:
+        idLiquidacion:
+          type: number
+          example: 1
+        estado:
+          type: string
+          example: 'APRO'
+        observacion:
+          type: string
+          example: 'Plantilla aceptada'
